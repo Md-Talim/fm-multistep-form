@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { StepProvider } from "@/providers/step-provider";
 import type { Metadata } from "next";
 import { Ubuntu } from "next/font/google";
@@ -21,7 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${ubuntu.variable} antialiased`}>
+      <body
+        className={cn(`${ubuntu.variable} antialiased`, "lg:center h-screen")}
+      >
         <StepProvider>{children}</StepProvider>
       </body>
     </html>
