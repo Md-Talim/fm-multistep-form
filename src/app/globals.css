@@ -6,6 +6,7 @@
 @theme inline {
   --color-denim: hsl(213, 96%, 18%);
   --color-gray: hsl(231, 11%, 63%);
+  --color-b-gray: hsl(231, 23%, 87%);
   --color-light-blue: hsl(228, 100%, 84%);
   --color-light-gray: hsl(229, 24%, 87%);
   --color-very-light-gray: hsl(231, 100%, 99%);
@@ -147,4 +148,14 @@ body {
 
 @utility body-s {
   @apply text-[12px];
+}
+
+@utility center {
+  @apply flex items-center justify-center;
+}
+
+@utility bg-pattern {
+  @apply bg-cover bg-center bg-no-repeat;
+  @apply bg-[url('/images/bg-sidebar-mobile.svg')];
+  @apply xl:bg-[url('/images/bg-sidebar-desktop.svg')];
 }

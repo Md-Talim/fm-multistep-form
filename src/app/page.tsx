@@ -1,7 +1,11 @@
+import MultiStepForm from "./multi-step-form";
+import Stepper from "./stepper";
+
 const Home = () => {
   return (
     <main>
-      <h1>Multi-Step Form Challenge.</h1>
+      <Stepper />
+      <MultiStepForm />
     </main>
   );
 };
