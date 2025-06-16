@@ -66,14 +66,14 @@ const SelectPlanForm = () => {
                 control={form.control}
                 name="plan"
                 render={({ field }) => (
-                  <div className="flex gap-3 flex-col lg:flex-row">
+                  <div className="flex gap-3 flex-col lg:flex-row lg:gap-[18px]">
                     {plans.map((plan) => (
                       <button
                         key={plan.id}
                         type="button"
                         onClick={() => field.onChange(plan.id)}
                         className={clsx(
-                          "p-4 border rounded-xl flex gap-[14px] items-start",
+                          "p-4 lg:pt-5 border rounded-xl flex lg:flex-col gap-[14px] lg:w-[138px] lg:min-h-[160px] items-start justify-between",
                           field.value === plan.id
                             ? "border-blue-600 bg-blue-50"
                             : "border-light-gray"
