@@ -7,8 +7,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { PrimaryButton, SecondaryButton } from "../shared/buttons";
+import { FormTitle } from "../shared/form-title";
 import { Form, FormField } from "../ui/form";
-import { FormTitle } from "./form-title";
 
 const formSchema = z.object({
   plan: z.enum(["arcade", "advanced", "pro"]),

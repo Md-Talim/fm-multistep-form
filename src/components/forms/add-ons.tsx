@@ -1,4 +1,4 @@
-import { FormTitle } from "./form-title";
+import { FormTitle } from "../shared/form-title";
 
 export const AddOns = () => {
   return (

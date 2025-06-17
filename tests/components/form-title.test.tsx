@@ -1,4 +1,4 @@
-import { FormTitle } from "@/components/forms/form-title";
+import { FormTitle } from "@/components/shared/form-title";
 import { render, screen } from "@testing-library/react";
 import { expect, test } from "vitest";
 
