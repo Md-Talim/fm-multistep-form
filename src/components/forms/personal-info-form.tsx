@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -10,9 +9,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { useStep } from "@/hooks/use-step";
 import { zodResolver } from "@hookform/resolvers/zod";
-import clsx from "clsx";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { PrimaryButton } from "../shared/buttons";
 import { FormTitle } from "./form-title";
 
 const formSchema = z.object({
@@ -117,14 +116,7 @@ const PersonalInfoForm = () => {
             </div>
 
             <div className="hidden lg:flex justify-end mt-[92px]">
-              <Button
-                type="submit"
-                className={clsx(
-                  "rounded-lg px-4 py-3 body-l bg-denim cursor-pointer hover:bg-[#164A8A]"
-                )}
-              >
-                Next Step
-              </Button>
+              <PrimaryButton type="submit" label="Next Step" />
             </div>
           </form>
         </Form>
@@ -133,15 +125,10 @@ const PersonalInfoForm = () => {
       <div className="lg:hidden h-32" />
 
       <div className="lg:hidden fixed bottom-0 flex justify-end bg-white p-4 w-full m-0">
-        <Button
-          type="button"
+        <PrimaryButton
+          label="Next Step"
           onClick={form.handleSubmit(onSubmit)}
-          className={clsx(
-            "rounded-lg px-4 py-3 body-l bg-denim cursor-pointer hover:bg-[#164A8A]"
-          )}
-        >
-          Next Step
-        </Button>
+        />
       </div>
     </>
   );

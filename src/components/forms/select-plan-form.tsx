@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { useStep } from "@/hooks/use-step";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,6 +6,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { PrimaryButton, SecondaryButton } from "../shared/buttons";
 import { Form, FormField } from "../ui/form";
 import { FormTitle } from "./form-title";
 
@@ -141,21 +141,8 @@ const SelectPlanForm = () => {
             </div>
 
             <div className="hidden lg:flex justify-between mt-[92px]">
-              <Button
-                className="text-gray font-medium hover:text-denim px-0 hover:bg-transparent py-3 body-l cursor-pointer"
-                variant="ghost"
-                onClick={handlePreviousClick}
-              >
-                Previous
-              </Button>
-              <Button
-                type="submit"
-                className={clsx(
-                  "rounded-lg px-4 py-3 body-l bg-denim cursor-pointer hover:bg-[#164A8A]"
-                )}
-              >
-                Next Step
-              </Button>
+              <SecondaryButton label="Previous" onClick={handlePreviousClick} />
+              <PrimaryButton type="submit" label="Next Step" />
             </div>
           </form>
         </Form>
@@ -164,22 +151,11 @@ const SelectPlanForm = () => {
       <div className="lg:hidden h-32" />
 
       <div className="lg:hidden fixed bottom-0 flex justify-between bg-white p-4 w-full m-0">
-        <Button
-          className="text-gray font-medium hover:text-denim py-3 body-l cursor-pointer"
-          variant="ghost"
-          onClick={handlePreviousClick}
-        >
-          Previous
-        </Button>
-        <Button
-          type="button"
+        <SecondaryButton label="Previous" onClick={handlePreviousClick} />
+        <PrimaryButton
+          label="Next Step"
           onClick={form.handleSubmit(onSubmit)}
-          className={clsx(
-            "rounded-lg px-4 py-3 body-l bg-denim cursor-pointer hover:bg-[#164A8A]"
-          )}
-        >
-          Next Step
-        </Button>
+        />
       </div>
     </div>
   );
