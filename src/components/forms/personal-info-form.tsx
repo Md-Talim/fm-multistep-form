@@ -130,7 +130,9 @@ const PersonalInfoForm = () => {
         </Form>
       </div>
 
-      <div className="lg:hidden absolute bottom-0 flex justify-end bg-white p-4 w-full m-0">
+      <div className="lg:hidden h-32" />
+
+      <div className="lg:hidden fixed bottom-0 flex justify-end bg-white p-4 w-full m-0">
         <Button
           type="button"
           onClick={form.handleSubmit(onSubmit)}

@@ -23,7 +23,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cn(`${ubuntu.variable} antialiased`, "lg:center h-screen")}
+        className={cn(
+          `${ubuntu.variable} antialiased`,
+          "lg:center min-h-screen max-h-screen"
+        )}
       >
         <StepProvider>{children}</StepProvider>
       </body>

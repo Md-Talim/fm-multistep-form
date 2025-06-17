@@ -53,7 +53,7 @@ const SelectPlanForm = () => {
 
   return (
     <div>
-      <div className="bg-white px-6 py-8 lg:px-[100px] lg:py-12 mx-4 lg:mx-0 rounded-[10px] max-lg:-mt-20 space-y-[22px] lg:space-y-10 max-lg:max-w-xl sm:mx-auto">
+      <div className="bg-white px-6 py-8 lg:px-[100px] lg:py-12 mx-4 lg:mx-0 rounded-[10px] max-lg:-mt-20 space-y-[22px] lg:space-y-10 max-lg:max-w-xl sm:mx-auto overflow-scroll">
         <FormTitle
           title="Select your plan"
           subtitle="You have the option of monthly or yearly billing."
@@ -73,7 +73,7 @@ const SelectPlanForm = () => {
                         type="button"
                         onClick={() => field.onChange(plan.id)}
                         className={clsx(
-                          "p-4 lg:pt-5 border rounded-xl flex lg:flex-col gap-[14px] lg:w-[138px] lg:min-h-[160px] items-start justify-between",
+                          "p-4 lg:pt-5 border rounded-xl flex lg:flex-col gap-[14px] lg:w-[138px] lg:min-h-[160px] items-start lg:justify-between",
                           field.value === plan.id
                             ? "border-blue-600 bg-blue-50"
                             : "border-light-gray"
@@ -161,7 +161,9 @@ const SelectPlanForm = () => {
         </Form>
       </div>
 
-      <div className="lg:hidden absolute bottom-0 flex justify-between bg-white p-4 w-full m-0">
+      <div className="lg:hidden h-32" />
+
+      <div className="lg:hidden fixed bottom-0 flex justify-between bg-white p-4 w-full m-0">
         <Button
           className="text-gray font-medium hover:text-denim py-3 body-l cursor-pointer"
           variant="ghost"

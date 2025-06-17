@@ -7,10 +7,10 @@ const MultiStepForm = () => {
   const { step } = useStep();
 
   return (
-    <div>
+    <>
       {step == 1 && <PersonalInfoForm />}
       {step == 2 && <SelectPlanForm />}
-    </div>
+    </>
   );
 };
 
