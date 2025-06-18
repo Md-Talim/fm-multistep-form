@@ -1,6 +1,10 @@
 "use client";
 
-import { PersonalInfoForm, SelectPlanForm } from "@/components/forms";
+import {
+  AddOnsForm,
+  PersonalInfoForm,
+  SelectPlanForm,
+} from "@/components/forms";
 import { useStep } from "@/hooks/use-step";
 
 const MultiStepForm = () => {
@@ -10,6 +14,7 @@ const MultiStepForm = () => {
     <>
       {step == 1 && <PersonalInfoForm />}
       {step == 2 && <SelectPlanForm />}
+      {step == 3 && <AddOnsForm />}
     </>
   );
 };
