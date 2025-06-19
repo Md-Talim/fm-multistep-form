@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { StepProvider } from "@/providers/step-provider";
+import { SubscriptionProvider } from "@/providers/subscription-provider";
 import type { Metadata } from "next";
 import { Ubuntu } from "next/font/google";
 import "./globals.css";
@@ -28,7 +29,9 @@ export default function RootLayout({
           "lg:center min-h-screen max-h-screen"
         )}
       >
-        <StepProvider>{children}</StepProvider>
+        <StepProvider>
+          <SubscriptionProvider>{children}</SubscriptionProvider>
+        </StepProvider>
       </body>
     </html>
   );

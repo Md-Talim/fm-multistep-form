@@ -1,44 +1,71 @@
 import { PrimaryButton, SecondaryButton } from "@/components/shared/buttons";
 import { FormTitle } from "@/components/shared/form-title";
-import { Form } from "@/components/ui/form";
+import { Form, FormField } from "@/components/ui/form";
 import { useStep } from "@/hooks/use-step";
+import { useSubscription } from "@/hooks/use-subscription";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Checkbox } from "../ui/checkbox";
+import { Label } from "../ui/label";
 
-const formSchema = z.object({});
+const formSchema = z.object({
+  onlineService: z.boolean().optional(),
+  largerStorage: z.boolean().optional(),
+  customizableProfile: z.boolean().optional(),
+});
 
-const addOnsList = [
+type addOnId = "onlineService" | "largerStorage" | "customizableProfile";
+type Price = { monthly: number; yearly: number };
+
+const addOnsList: {
+  id: addOnId;
+  name: string;
+  feature: string;
+  price: Price;
+}[] = [
   {
+    id: "onlineService",
     name: "Online Service",
     feature: "Access to multiplayer games",
-    price: { montly: 1, yearly: 10 },
+    price: { monthly: 1, yearly: 10 },
   },
   {
+    id: "largerStorage",
     name: "Larger storage",
     feature: "Extra 1TB of cloud save",
-    price: { montly: 2, yearly: 20 },
+    price: { monthly: 2, yearly: 20 },
   },
   {
+    id: "customizableProfile",
     name: "Customizable profile",
     feature: "Custom theme on your profile",
-    price: { montly: 2, yearly: 20 },
+    price: { monthly: 2, yearly: 20 },
   },
 ];
 
-const AddOns = () => {
+const AddOnsForm = () => {
   const { step, setStep } = useStep();
+  const { subscription, setSubscription } = useSubscription();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      plan: "arcade",
-      billing: "monthly",
+      onlineService: false,
+      largerStorage: false,
+      customizableProfile: false,
     },
   });
 
-  const onSubmit = () => {
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    setSubscription({
+      ...subscription,
+      addOns: {
+        onlineService: data.onlineService ?? false,
+        largerStorage: data.largerStorage ?? false,
+        customizableProfile: data.customizableProfile ?? false,
+      },
+    });
     setStep(step + 1);
   };
 
@@ -58,25 +85,38 @@ const AddOns = () => {
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="space-y-3 lg:space-y-4">
               {addOnsList.map((addOn) => (
-                <div
-                  key={addOn.name}
-                  className="flex items-center justify-between px-4 lg:px-6 pt-[11px] pb-3 lg:pt-4 lg:pb-5 border border-gray lg:w-[450px] rounded-xl"
-                >
-                  <div className="flex items-center gap-4">
-                    <Checkbox />
-                    <div>
-                      <h3 className="body-m lg:body-l font-medium text-denim">
-                        {addOn.name}
-                      </h3>
-                      <p className="body-s lg:body-m text-gray">
-                        {addOn.feature}
+                <FormField
+                  key={addOn.id}
+                  control={form.control}
+                  name={addOn.id}
+                  render={({ field }) => (
+                    <Label
+                      key={addOn.id}
+                      className="flex items-center justify-between px-4 lg:px-6 pt-[11px] pb-3 lg:pt-4 lg:pb-5 border border-gray hover:border-purple hover:cursor-pointer lg:w-[450px] rounded-xl has-[[aria-checked=true]]:border-purple has-[[aria-checked=true]]:bg-very-light-gray"
+                    >
+                      <div className="flex items-center gap-4">
+                        <Checkbox
+                          id={addOn.id}
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          className="data-[state=checked]:border-purple data-[state=checked]:bg-purple data-[state=checked]:text-white"
+                        />
+                        <div className="grid gap-[3px] lg:gap-[7px]">
+                          <p className="body-m lg:body-l text-denim">
+                            {addOn.name}
+                          </p>
+                          <p className="body-s lg:body-m text-gray leading-[20px]">
+                            {addOn.feature}
+                          </p>
+                        </div>
+                      </div>
+                      <p className="body-s lg:body-m text-purple">
+                        +${addOn.price[subscription.type]}/
+                        {subscription.type === "monthly" ? "mo" : "yr"}
                       </p>
-                    </div>
-                  </div>
-                  <p className="body-s lg:body-m text-purple">
-                    +${addOn.price.montly}/mo
-                  </p>
-                </div>
+                    </Label>
+                  )}
+                />
               ))}
             </div>
 
@@ -101,4 +141,4 @@ const AddOns = () => {
   );
 };
 
-export default AddOns;
+export default AddOnsForm;

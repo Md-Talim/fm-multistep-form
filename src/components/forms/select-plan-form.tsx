@@ -1,40 +1,51 @@
 import { Switch } from "@/components/ui/switch";
 import { useStep } from "@/hooks/use-step";
+import { useSubscription } from "@/hooks/use-subscription";
 import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
 import Image from "next/image";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { ControllerRenderProps, useForm } from "react-hook-form";
 import { z } from "zod";
 import { PrimaryButton, SecondaryButton } from "../shared/buttons";
 import { FormTitle } from "../shared/form-title";
 import { Form, FormField } from "../ui/form";
 
-const formSchema = z.object({
+const subscriptionSchema = z.object({
   plan: z.enum(["arcade", "advanced", "pro"]),
-  billing: z.enum(["monthly", "yearly"]),
+  type: z.enum(["monthly", "yearly"]),
 });
 
 const SelectPlanForm = () => {
   const { step, setStep } = useStep();
-  const [selectedBilling, setSelectedBilling] = useState<"monthly" | "yearly">(
-    "monthly"
-  );
+  const { subscription, setSubscription } = useSubscription();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof subscriptionSchema>>({
+    resolver: zodResolver(subscriptionSchema),
     defaultValues: {
       plan: "arcade",
-      billing: "monthly",
+      type: "monthly",
     },
   });
 
-  const onSubmit = () => {
+  const onSubmit = (data: z.infer<typeof subscriptionSchema>) => {
+    setSubscription({ ...subscription, type: data.type, plan: data.plan });
     setStep(step + 1);
   };
 
   const handlePreviousClick = () => {
     setStep(step - 1);
+  };
+
+  const handleSubscriptionTypeToggle = (
+    checked: boolean,
+    field: ControllerRenderProps<z.infer<typeof subscriptionSchema>>
+  ) => {
+    const subscriptionType = checked ? "yearly" : "monthly";
+    field.onChange(subscriptionType);
+    setSubscription({
+      ...subscription,
+      type: subscriptionType,
+    });
   };
 
   const plans = [
@@ -88,11 +99,11 @@ const SelectPlanForm = () => {
                         <span className="flex flex-col items-start">
                           <span className="font-medium">{plan.name}</span>
                           <span className="text-sm text-gray-500">
-                            {selectedBilling === "monthly"
+                            {subscription.type === "monthly"
                               ? plan.price.monthly
                               : plan.price.yearly}
                           </span>
-                          {selectedBilling === "yearly" && (
+                          {subscription.type === "yearly" && (
                             <span className="text-denim body-s">
                               2 months free
                             </span>
@@ -106,7 +117,7 @@ const SelectPlanForm = () => {
 
               <FormField
                 control={form.control}
-                name="billing"
+                name="type"
                 render={({ field }) => (
                   <div className="flex items-center gap-4 bg-gray-100 p-4 rounded-lg justify-center">
                     <span
@@ -120,11 +131,9 @@ const SelectPlanForm = () => {
 
                     <Switch
                       checked={field.value === "yearly"}
-                      onCheckedChange={(checked) => {
-                        const billingValue = checked ? "yearly" : "monthly";
-                        field.onChange(billingValue);
-                        setSelectedBilling(billingValue);
-                      }}
+                      onCheckedChange={(checked) =>
+                        handleSubscriptionTypeToggle(checked, field)
+                      }
                     />
 
                     <span
