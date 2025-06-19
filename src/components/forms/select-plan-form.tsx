@@ -1,4 +1,5 @@
 import { Switch } from "@/components/ui/switch";
+import { planList } from "@/data";
 import { useStep } from "@/hooks/use-step";
 import { useSubscription } from "@/hooks/use-subscription";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -48,19 +49,7 @@ const SelectPlanForm = () => {
     });
   };
 
-  const plans = [
-    {
-      id: "arcade",
-      name: "Arcade",
-      price: { monthly: "$9/mo", yearly: "$90/yr" },
-    },
-    {
-      id: "advanced",
-      name: "Advanced",
-      price: { monthly: "$12/mo", yearly: "$120/yr" },
-    },
-    { id: "pro", name: "Pro", price: { monthly: "$15/mo", yearly: "$150/yr" } },
-  ];
+  const billingPeriod = subscription.type === "monthly" ? "mo" : "yr";
 
   return (
     <div>
@@ -78,7 +67,7 @@ const SelectPlanForm = () => {
                 name="plan"
                 render={({ field }) => (
                   <div className="flex gap-3 flex-col lg:flex-row lg:gap-[18px]">
-                    {plans.map((plan) => (
+                    {planList.map((plan) => (
                       <button
                         key={plan.id}
                         type="button"
@@ -99,9 +88,11 @@ const SelectPlanForm = () => {
                         <span className="flex flex-col items-start">
                           <span className="font-medium">{plan.name}</span>
                           <span className="text-sm text-gray-500">
+                            $
                             {subscription.type === "monthly"
                               ? plan.price.monthly
                               : plan.price.yearly}
+                            /{billingPeriod}
                           </span>
                           {subscription.type === "yearly" && (
                             <span className="text-denim body-s">

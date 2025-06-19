@@ -1,6 +1,7 @@
 import { PrimaryButton, SecondaryButton } from "@/components/shared/buttons";
 import { FormTitle } from "@/components/shared/form-title";
 import { Form, FormField } from "@/components/ui/form";
+import { addOnList } from "@/data";
 import { useStep } from "@/hooks/use-step";
 import { useSubscription } from "@/hooks/use-subscription";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,35 +15,6 @@ const formSchema = z.object({
   largerStorage: z.boolean().optional(),
   customizableProfile: z.boolean().optional(),
 });
-
-type addOnId = "onlineService" | "largerStorage" | "customizableProfile";
-type Price = { monthly: number; yearly: number };
-
-const addOnsList: {
-  id: addOnId;
-  name: string;
-  feature: string;
-  price: Price;
-}[] = [
-  {
-    id: "onlineService",
-    name: "Online Service",
-    feature: "Access to multiplayer games",
-    price: { monthly: 1, yearly: 10 },
-  },
-  {
-    id: "largerStorage",
-    name: "Larger storage",
-    feature: "Extra 1TB of cloud save",
-    price: { monthly: 2, yearly: 20 },
-  },
-  {
-    id: "customizableProfile",
-    name: "Customizable profile",
-    feature: "Custom theme on your profile",
-    price: { monthly: 2, yearly: 20 },
-  },
-];
 
 const AddOnsForm = () => {
   const { step, setStep } = useStep();
@@ -84,7 +56,7 @@ const AddOnsForm = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="space-y-3 lg:space-y-4">
-              {addOnsList.map((addOn) => (
+              {addOnList.map((addOn) => (
                 <FormField
                   key={addOn.id}
                   control={form.control}
