@@ -8,7 +8,7 @@ import {
 import { PrimaryButton, SecondaryButton } from "@/components/shared/buttons";
 import { FormTitle } from "@/components/shared/form-title";
 import { Button } from "@/components/ui/button";
-import { addOnList, plans } from "@/data";
+import { addOns, plans } from "@/data";
 import { useStep } from "@/hooks/use-step";
 import { useSubscription } from "@/hooks/use-subscription";
 
@@ -31,10 +31,6 @@ const SummaryTable = () => {
   const { subscription } = useSubscription();
   const { step, setStep } = useStep();
 
-  const subscribedAddOns = addOnList.filter(
-    (addOn) => subscription.addOns[addOn.id]
-  );
-
   const handlePreviousClick = () => {
     setStep(step - 1);
   };
@@ -44,6 +40,18 @@ const SummaryTable = () => {
   };
 
   const billingPeriod = subscription.type === "monthly" ? "mo" : "yr";
+
+  const subscribedAddOns = Object.entries(subscription.addOns)
+    .filter(([_, isSelected]) => isSelected)
+    .map(([addOnKey, _]) => {
+      const addOn = addOns[addOnKey as keyof typeof addOns];
+      return {
+        id: addOnKey,
+        name: addOn.name,
+        price: { monthly: addOn.monthly, yearly: addOn.yearly },
+      };
+    });
+
   const total =
     plans[subscription.plan][subscription.type] +
     subscribedAddOns.reduce(
@@ -116,7 +124,7 @@ const SummaryTable = () => {
 
       <div className="lg:hidden fixed bottom-0 flex justify-between bg-white p-4 w-full m-0">
         <SecondaryButton label="Previous" onClick={handlePreviousClick} />
-        <PrimaryButton label="Next Step" />
+        <PrimaryButton label="Next Step" onClick={handleNextClick} />
       </div>
     </div>
   );

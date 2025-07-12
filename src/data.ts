@@ -1,12 +1,3 @@
-type PlanIdType = "arcade" | "advanced" | "pro";
-
-type PlanNameType = "Arcade" | "Advanced" | "Pro";
-
-type PriceType = {
-  monthly: number;
-  yearly: number;
-};
-
 export const plans = {
   arcade: {
     monthly: 9,
@@ -22,32 +13,23 @@ export const plans = {
   },
 };
 
-type addOnId = "onlineService" | "largerStorage" | "customizableProfile";
-
-interface AddOn {
-  id: addOnId;
-  name: string;
-  feature: string;
-  price: PriceType;
-}
-
-export const addOnList: AddOn[] = [
-  {
-    id: "onlineService",
+export const addOns = {
+  onlineService: {
     name: "Online Service",
     feature: "Access to multiplayer games",
-    price: { monthly: 1, yearly: 10 },
+    monthly: 1,
+    yearly: 10,
   },
-  {
-    id: "largerStorage",
+  largerStorage: {
     name: "Larger storage",
     feature: "Extra 1TB of cloud save",
-    price: { monthly: 2, yearly: 20 },
+    monthly: 2,
+    yearly: 20,
   },
-  {
-    id: "customizableProfile",
+  customizableProfile: {
     name: "Customizable profile",
     feature: "Custom theme on your profile",
-    price: { monthly: 2, yearly: 20 },
+    monthly: 2,
+    yearly: 20,
   },
-];
+};
