@@ -28,7 +28,7 @@ interface StepperProps {
 }
 
 const DesktopStepper = ({ currentStep }: StepperProps) => {
-  const steps = ["Your Info", "Select Plan", "Add-Ons", "Summary"];
+  const steps = ["Your Info", "Select Plan", "Add-Ons", "Summary", "Thank You"];
   return (
     <div className="bg-pattern w-[274px] h-[568px] px-8 py-10 rounded-[10px]">
       <div className="space-y-8">
@@ -52,7 +52,7 @@ const DesktopStepper = ({ currentStep }: StepperProps) => {
 const MobileStepper = ({ currentStep }: StepperProps) => (
   <div className="bg-pattern h-[172px] pt-8 flex justify-center">
     <div className="text-white body-m flex gap-4 mx-auto">
-      {[1, 2, 3, 4].map((step) => (
+      {[1, 2, 3, 4, 5].map((step) => (
         <StepCircle
           key={step}
           step={step}

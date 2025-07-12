@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { addOns, plans } from "@/data";
 import { useStep } from "@/hooks/use-step";
 import { useSubscription } from "@/hooks/use-subscription";
+import Image from "next/image";
 
 const MultiStepForm = () => {
   const { step } = useStep();
@@ -21,6 +22,7 @@ const MultiStepForm = () => {
       {step == 2 && <SelectPlanForm />}
       {step == 3 && <AddOnsForm />}
       {step == 4 && <SummaryTable />}
+      {step == 5 && <ThankYou />}
     </>
   );
 };
@@ -33,6 +35,11 @@ const SummaryTable = () => {
 
   const handlePreviousClick = () => {
     setStep(step - 1);
+  };
+
+  const handleNextClick = () => {
+    console.log("Next Step Clicked");
+    setStep(step + 1);
   };
 
   const handleChangePlan = () => {
@@ -116,7 +123,7 @@ const SummaryTable = () => {
 
         <div className="hidden lg:flex justify-between mt-[81px]">
           <SecondaryButton label="Previous" onClick={handlePreviousClick} />
-          <PrimaryButton type="submit" label="Next Step" />
+          <PrimaryButton label="Confirm" onClick={handleNextClick} />
         </div>
       </div>
 
@@ -124,7 +131,31 @@ const SummaryTable = () => {
 
       <div className="lg:hidden fixed bottom-0 flex justify-between bg-white p-4 w-full m-0">
         <SecondaryButton label="Previous" onClick={handlePreviousClick} />
-        <PrimaryButton label="Next Step" onClick={handleNextClick} />
+        <PrimaryButton label="Confirm" onClick={handleNextClick} />
+      </div>
+    </div>
+  );
+};
+
+const ThankYou = () => {
+  return (
+    <div className="bg-white px-6 py-20 lg:px-[100px] mx-4 lg:mx-0 rounded-[10px] max-lg:-mt-20 max-lg:max-w-xl sm:mx-auto lg:center">
+      <div className="space-y-6">
+        <Image
+          src="/images/icon-thank-you.svg"
+          width={56}
+          height={56}
+          alt="Thank you icon"
+          className="mx-auto lg:w-20 lg:h-20"
+        />
+        <div className="text-center space-y-[9px]">
+          <h1 className="heading">Thank You</h1>
+          <p className="body-l text-gray">
+            Thanks for confirming your subscription! We hope you have fun using
+            our platform. If you ever need support, please feel free to email us
+            at support@loremgaming.com.
+          </p>
+        </div>
       </div>
     </div>
   );
