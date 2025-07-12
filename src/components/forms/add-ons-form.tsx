@@ -10,7 +10,7 @@ import { z } from "zod";
 import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
 
-const formSchema = z.object({
+const addOnsSchema = z.object({
   onlineService: z.boolean().optional(),
   largerStorage: z.boolean().optional(),
   customizableProfile: z.boolean().optional(),
@@ -20,16 +20,16 @@ const AddOnsForm = () => {
   const { step, setStep } = useStep();
   const { subscription, setSubscription } = useSubscription();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof addOnsSchema>>({
+    resolver: zodResolver(addOnsSchema),
     defaultValues: {
-      onlineService: false,
-      largerStorage: false,
-      customizableProfile: false,
+      onlineService: subscription.addOns.onlineService,
+      largerStorage: subscription.addOns.largerStorage,
+      customizableProfile: subscription.addOns.customizableProfile,
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
+  const onSubmit = (data: z.infer<typeof addOnsSchema>) => {
     setSubscription({
       ...subscription,
       addOns: {

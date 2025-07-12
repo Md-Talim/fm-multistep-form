@@ -7,29 +7,20 @@ type PriceType = {
   yearly: number;
 };
 
-interface Plan {
-  id: PlanIdType;
-  name: PlanNameType;
-  price: PriceType;
-}
-
-export const planList: Plan[] = [
-  {
-    id: "arcade",
-    name: "Arcade",
-    price: { monthly: 9, yearly: 90 },
+export const plans = {
+  arcade: {
+    monthly: 9,
+    yearly: 90,
   },
-  {
-    id: "advanced",
-    name: "Advanced",
-    price: { monthly: 12, yearly: 120 },
+  advanced: {
+    monthly: 12,
+    yearly: 120,
   },
-  {
-    id: "pro",
-    name: "Pro",
-    price: { monthly: 15, yearly: 150 },
+  pro: {
+    monthly: 15,
+    yearly: 150,
   },
-];
+};
 
 type addOnId = "onlineService" | "largerStorage" | "customizableProfile";
 

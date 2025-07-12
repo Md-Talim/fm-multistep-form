@@ -1,5 +1,5 @@
 import { Switch } from "@/components/ui/switch";
-import { planList } from "@/data";
+import { plans } from "@/data";
 import { useStep } from "@/hooks/use-step";
 import { useSubscription } from "@/hooks/use-subscription";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,8 +23,8 @@ const SelectPlanForm = () => {
   const form = useForm<z.infer<typeof subscriptionSchema>>({
     resolver: zodResolver(subscriptionSchema),
     defaultValues: {
-      plan: "arcade",
-      type: "monthly",
+      plan: subscription.plan,
+      type: subscription.type,
     },
   });
 
@@ -67,32 +67,30 @@ const SelectPlanForm = () => {
                 name="plan"
                 render={({ field }) => (
                   <div className="flex gap-3 flex-col lg:flex-row lg:gap-[18px]">
-                    {planList.map((plan) => (
+                    {Object.entries(plans).map(([planName, plan]) => (
                       <button
-                        key={plan.id}
+                        key={planName}
                         type="button"
-                        onClick={() => field.onChange(plan.id)}
+                        onClick={() => field.onChange(planName)}
                         className={clsx(
                           "p-4 lg:pt-5 border rounded-xl flex lg:flex-col gap-[14px] lg:w-[138px] lg:min-h-[160px] items-start lg:justify-between",
-                          field.value === plan.id
+                          field.value === planName
                             ? "border-blue-600 bg-blue-50"
                             : "border-light-gray"
                         )}
                       >
                         <Image
-                          src={`/images/icon-${plan.id}.svg`}
-                          alt={plan.name}
+                          src={`/images/icon-${planName}.svg`}
+                          alt={planName}
                           width={40}
                           height={40}
                         />
                         <span className="flex flex-col items-start">
-                          <span className="font-medium">{plan.name}</span>
+                          <span className="font-medium capitalize">
+                            {planName}
+                          </span>
                           <span className="text-sm text-gray-500">
-                            $
-                            {subscription.type === "monthly"
-                              ? plan.price.monthly
-                              : plan.price.yearly}
-                            /{billingPeriod}
+                            ${plan[subscription.type]}/{billingPeriod}
                           </span>
                           {subscription.type === "yearly" && (
                             <span className="text-denim body-s">

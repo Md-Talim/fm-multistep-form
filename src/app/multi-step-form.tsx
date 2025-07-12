@@ -8,7 +8,7 @@ import {
 import { PrimaryButton, SecondaryButton } from "@/components/shared/buttons";
 import { FormTitle } from "@/components/shared/form-title";
 import { Button } from "@/components/ui/button";
-import { addOnList, planList } from "@/data";
+import { addOnList, plans } from "@/data";
 import { useStep } from "@/hooks/use-step";
 import { useSubscription } from "@/hooks/use-subscription";
 
@@ -31,14 +31,9 @@ const SummaryTable = () => {
   const { subscription } = useSubscription();
   const { step, setStep } = useStep();
 
-  const subscribedPlan = planList.find((plan) => plan.id === subscription.plan);
   const subscribedAddOns = addOnList.filter(
     (addOn) => subscription.addOns[addOn.id]
   );
-
-  console.log(subscribedAddOns);
-
-  if (!subscribedPlan) return null;
 
   const handlePreviousClick = () => {
     setStep(step - 1);
@@ -49,7 +44,13 @@ const SummaryTable = () => {
   };
 
   const billingPeriod = subscription.type === "monthly" ? "mo" : "yr";
-  const total = 12;
+  const total =
+    plans[subscription.plan][subscription.type] +
+    subscribedAddOns.reduce(
+      (prevValue, currentValue) =>
+        prevValue + currentValue.price[subscription.type],
+      0
+    );
 
   return (
     <div>
@@ -64,7 +65,7 @@ const SummaryTable = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="body-m lg:body-l font-medium text-denim capitalize">
-                  {subscribedPlan.name} ({subscription.type})
+                  {subscription.plan} ({subscription.type})
                 </p>
                 <Button
                   type="button"
@@ -76,7 +77,7 @@ const SummaryTable = () => {
                 </Button>
               </div>
               <p className="body-l font-bold text-denim">
-                ${subscribedPlan.price[subscription.type]}/{billingPeriod}
+                ${plans[subscription.plan][subscription.type]}/{billingPeriod}
               </p>
             </div>
 
